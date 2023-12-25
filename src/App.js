@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
-
+import axios from "axios";
+import { react, useState } from "react";
+import './style.css'
 function App() {
+  const [state, setState] = useState([]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Axios Testing </h1>
+      <button
+        onClick={() => {
+          axios
+            .get("https://jsonplaceholder.typicode.com/posts")
+            .then((response) => {
+              console.log(response.data);
+              setState(response.data);
+            });
+        }}
+      >
+        Click
+      </button>
+      {state.map((obj,index) => {
+        return (
+          <div className="d-flex w-100 t-l">
+            <h4 className="w/3 p-20 t-l">{index+1}</h4>
+            <h4 className="w/3 p-20 t-l">{obj.title}</h4>
+            <p className="w/3 p-20 t-l">{obj.body}</p>
+          </div>
+        )
+      })}
     </div>
   );
 }
